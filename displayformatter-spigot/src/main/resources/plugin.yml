@@ -1,0 +1,8 @@
+name: DisplayFormatter
+version: 1.0
+api-version: 1.16
+author: MCMDEV
+description: Spigot Plugin for customizing player display
+main: de.mcmdev.displayformatter.spigot.DFSpigotPlugin
+softdepend:
+  - LuckPerms
