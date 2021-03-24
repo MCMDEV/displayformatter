@@ -3,6 +3,7 @@ package de.mcmdev.displayformatter.spigot;
 import de.mcmdev.displayformatter.common.DisplayInformationProvider;
 import de.mcmdev.displayformatter.common.TabDisplayHandler;
 import de.mcmdev.displayformatter.common.implementation.LuckpermsInformationProvider;
+import de.mcmdev.displayformatter.spigot.api.DisplayUpdateEvent;
 import de.mcmdev.displayformatter.spigot.implementation.SpigotTabDisplayHandler;
 import de.mcmdev.displayformatter.spigot.utils.TeamUtils;
 import org.bukkit.Bukkit;
@@ -50,12 +51,20 @@ public class DisplayFormatterSpigot {
     public void update(Player player) {
         UUID uuid = player.getUniqueId();
 
+        String prefix = ChatColor.translateAlternateColorCodes('&', getDisplayInformationProvider().getTabPrefix(uuid).orElse(""));
+        String suffix = ChatColor.translateAlternateColorCodes('&', getDisplayInformationProvider().getTabSuffix(uuid).orElse(""));
+        String color = getDisplayInformationProvider().getTabColor(uuid).orElse("WHITE");
+        int weight = getDisplayInformationProvider().getTabWeight(uuid).orElse(0);
+
+        DisplayUpdateEvent displayUpdateEvent = new DisplayUpdateEvent(prefix, suffix, weight, color);
+        Bukkit.getPluginManager().callEvent(displayUpdateEvent);
+
         getTabDisplayHandler().update(
                 uuid,
-                ChatColor.translateAlternateColorCodes('&', getDisplayInformationProvider().getTabPrefix(uuid).orElse("")),
-                getDisplayInformationProvider().getTabColor(uuid).orElse("WHITE"),
-                ChatColor.translateAlternateColorCodes('&', getDisplayInformationProvider().getTabSuffix(uuid).orElse("")),
-                getDisplayInformationProvider().getTabWeight(uuid).orElse(0)
+                displayUpdateEvent.getPrefix(),
+                displayUpdateEvent.getChatColor(),
+                displayUpdateEvent.getSuffix(),
+                displayUpdateEvent.getWeight()
         );
     }
 
