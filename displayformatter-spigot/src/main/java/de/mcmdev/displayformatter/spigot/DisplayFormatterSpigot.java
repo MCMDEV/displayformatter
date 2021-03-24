@@ -5,7 +5,6 @@ import de.mcmdev.displayformatter.common.TabDisplayHandler;
 import de.mcmdev.displayformatter.common.implementation.LuckpermsInformationProvider;
 import de.mcmdev.displayformatter.spigot.api.DisplayUpdateEvent;
 import de.mcmdev.displayformatter.spigot.implementation.SpigotTabDisplayHandler;
-import de.mcmdev.displayformatter.spigot.utils.TeamUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,14 +13,10 @@ import org.bukkit.scoreboard.Team;
 import java.util.UUID;
 
 public class DisplayFormatterSpigot {
-
-    private final TeamCache teamCache;
     private DisplayInformationProvider displayInformationProvider;
     private TabDisplayHandler tabDisplayHandler;
 
     public DisplayFormatterSpigot() {
-        this.teamCache = new TeamCache();
-
         loadDisplayInformation();
         loadTabDisplayHandler();
     }
@@ -33,7 +28,7 @@ public class DisplayFormatterSpigot {
     }
 
     private void loadTabDisplayHandler() {
-        this.tabDisplayHandler = new SpigotTabDisplayHandler(teamCache);
+        this.tabDisplayHandler = new SpigotTabDisplayHandler();
     }
 
     public DisplayInformationProvider getDisplayInformationProvider() {
@@ -42,10 +37,6 @@ public class DisplayFormatterSpigot {
 
     public TabDisplayHandler getTabDisplayHandler() {
         return tabDisplayHandler;
-    }
-
-    public TeamCache getTeamCache() {
-        return teamCache;
     }
 
     public void update(Player player) {
@@ -69,10 +60,12 @@ public class DisplayFormatterSpigot {
     }
 
     public void cleanup(Player player) {
-        TeamWeightPair teamWeightPair = getTeamCache().getTeam(player);
-        Team team = player.getScoreboard().getTeam(TeamUtils.generateTeamName(teamWeightPair.getTeamName(), teamWeightPair.getWeight()));
-        team.removeEntry(player.getName());
-        team.unregister();
-        getTeamCache().removeCache(player);
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            Team team = onlinePlayer.getScoreboard().getEntryTeam(player.getName());
+            if (team != null) {
+                team.removeEntry(player.getName());
+                team.unregister();
+            }
+        }
     }
 }
