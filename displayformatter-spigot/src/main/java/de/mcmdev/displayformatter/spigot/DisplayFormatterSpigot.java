@@ -39,6 +39,17 @@ public class DisplayFormatterSpigot {
         return tabDisplayHandler;
     }
 
+    public String format(Player player) {
+        UUID uuid = player.getUniqueId();
+
+        String prefix = ChatColor.translateAlternateColorCodes('&', getDisplayInformationProvider().getChatPrefix(uuid).orElse(""));
+        String suffix = ChatColor.translateAlternateColorCodes('&', getDisplayInformationProvider().getChatSuffix(uuid).orElse(""));
+
+        String chatFormat = getDisplayInformationProvider().getChatFormat(uuid).orElse("<%s> %s");
+        chatFormat = chatFormat.replaceFirst("%s", prefix + "%s" + suffix);
+        return ChatColor.translateAlternateColorCodes('&', chatFormat);
+    }
+
     public void update(Player player) {
         UUID uuid = player.getUniqueId();
 

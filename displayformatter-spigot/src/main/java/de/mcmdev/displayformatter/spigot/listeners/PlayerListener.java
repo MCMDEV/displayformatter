@@ -4,6 +4,7 @@ import de.mcmdev.displayformatter.spigot.DFSpigotPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -25,5 +26,10 @@ public class PlayerListener implements Listener {
     @EventHandler
     private void onQuit(PlayerQuitEvent event) {
         spigotPlugin.getDisplayFormatter().cleanup(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent event) {
+        event.setFormat(spigotPlugin.getDisplayFormatter().format(event.getPlayer()));
     }
 }
