@@ -7,16 +7,18 @@
     <groupId>de.mcmdev</groupId>
     <artifactId>displayformatter</artifactId>
     <packaging>pom</packaging>
-    <version>1.1-SNAPSHOT</version>
-    <modules>
-        <module>displayformatter-common</module>
-        <module>displayformatter-spigot</module>
-    </modules>
+    <version>${revision}</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <revision>0.3-dev</revision>
     </properties>
+
+    <modules>
+        <module>displayformatter-common</module>
+        <module>displayformatter-spigot</module>
+    </modules>
 
     <build>
         <plugins>
