@@ -10,4 +10,5 @@ public interface PermissionSource<P> {
 
     Optional<String> getColor(P player);
 
+    Optional<Integer> getSorting(P player);
 }

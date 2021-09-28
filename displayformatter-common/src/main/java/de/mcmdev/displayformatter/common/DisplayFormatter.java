@@ -19,22 +19,22 @@ public class DisplayFormatter<P> {
     private PermissionSource<P> permissionSource;
 
     public void load() {
-        this.teamManager = new TeamManager<>(this.platform);
         this.mainConfiguration = this.platform.getConfiguration("config.yml");
 
         loadPermissionSourceFromConfig();
+        this.teamManager = new TeamManager<>(this.platform, this.permissionSource);
     }
 
     public void unload() {
         this.teamManager = null;
-        this.mainConfiguration = null;
         this.permissionSource = null;
+        this.mainConfiguration = null;
     }
 
-    private void loadPermissionSourceFromConfig()   {
+    private void loadPermissionSourceFromConfig() {
         String permissionSourceName = this.mainConfiguration.getString("permission-source");
         PermissionSource<P> permissionSource;
-        switch (permissionSourceName)   {
+        switch (permissionSourceName) {
             default:
                 permissionSource = new LuckpermsPermissionSource<>(this.platform);
         }

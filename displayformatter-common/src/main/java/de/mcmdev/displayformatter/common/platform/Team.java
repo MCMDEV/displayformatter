@@ -1,10 +1,10 @@
 package de.mcmdev.displayformatter.common.platform;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@Builder
+@RequiredArgsConstructor
 public class Team<P> {
 
     private final String name;
@@ -12,5 +12,4 @@ public class Team<P> {
     private final String prefix;
     private final String color;
     private final String suffix;
-
 }
