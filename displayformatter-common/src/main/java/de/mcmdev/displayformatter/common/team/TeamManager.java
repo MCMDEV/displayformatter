@@ -1,6 +1,7 @@
 package de.mcmdev.displayformatter.common.team;
 
-import de.mcmdev.displayformatter.common.permissionsource.PermissionSource;
+import de.mcmdev.displayformatter.common.display.DisplayDataProvider;
+import de.mcmdev.displayformatter.common.display.TabData;
 import de.mcmdev.displayformatter.common.platform.Platform;
 import de.mcmdev.displayformatter.common.platform.Team;
 import lombok.RequiredArgsConstructor;
@@ -13,22 +14,20 @@ import java.util.Optional;
 public class TeamManager<P> {
 
     private final Platform<P> platform;
-    private final PermissionSource<P> permissionSource;
+    private final DisplayDataProvider<P> displayDataProvider;
 
     private final Map<P, Team<P>> teamMap = new HashMap<>();
 
     public Team<P> createTeam(P owner) {
+        TabData tabData = this.displayDataProvider.getTabDataForPlayer(owner);
+
         String playerName = this.platform.getName(owner);
-        char sortingChar = (char) (this.permissionSource.getSorting(owner).orElse(0) + 33);
+        char sortingChar = (char) (tabData.getSort() + 33);
         String teamName =
                 sortingChar + (playerName.length() < 8 ? playerName : playerName.substring(0, 8));
 
         return new Team<>(
-                teamName,
-                playerName,
-                this.permissionSource.getPrefix(owner).orElse(""),
-                this.permissionSource.getColor(owner).orElse("WHITE"),
-                this.permissionSource.getSuffix(owner).orElse(""));
+                teamName, playerName, tabData.getPrefix(), tabData.getColor(), tabData.getSuffix());
     }
 
     public void registerTeam(P owner, Team<P> team) {

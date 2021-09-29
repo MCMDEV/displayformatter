@@ -4,6 +4,8 @@ import de.mcmdev.displayformatter.common.platform.Configuration;
 import de.mcmdev.displayformatter.common.platform.Platform;
 import de.mcmdev.displayformatter.common.platform.Team;
 import de.mcmdev.displayformatter.spigot.DFSpigotPlugin;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.UUID;
 
 public class SpigotPlatform implements Platform<Player> {
@@ -31,9 +34,13 @@ public class SpigotPlatform implements Platform<Player> {
     public void createTeam(Player player, Team<Player> team) {
         Scoreboard scoreboard = player.getScoreboard();
         org.bukkit.scoreboard.Team bukkitTeam = scoreboard.registerNewTeam(team.getName());
-        bukkitTeam.setPrefix(team.getPrefix());
-        bukkitTeam.setSuffix(team.getSuffix());
-        bukkitTeam.setColor(ChatColor.valueOf(team.getColor()));
+        bukkitTeam.setPrefix(LegacyComponentSerializer.legacySection().serialize(team.getPrefix()));
+        bukkitTeam.setSuffix(LegacyComponentSerializer.legacySection().serialize(team.getSuffix()));
+        bukkitTeam.setColor(
+                ChatColor.valueOf(
+                        NamedTextColor.nearestTo(team.getColor())
+                                .toString()
+                                .toUpperCase(Locale.ROOT)));
         bukkitTeam.addEntry(team.getOwner());
     }
 

@@ -1,4 +1,4 @@
-package de.mcmdev.displayformatter.common.platform;
+package de.mcmdev.displayformatter.common.display;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,11 +7,10 @@ import net.kyori.adventure.text.format.TextColor;
 
 @Getter
 @RequiredArgsConstructor
-public class Team<P> {
+public class TabData {
 
-    private final String name;
-    private final String owner;
     private final Component prefix;
-    private final TextColor color;
     private final Component suffix;
+    private final TextColor color;
+    private final int sort;
 }

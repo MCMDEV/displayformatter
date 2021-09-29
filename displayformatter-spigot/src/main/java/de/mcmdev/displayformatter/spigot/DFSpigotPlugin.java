@@ -1,6 +1,7 @@
 package de.mcmdev.displayformatter.spigot;
 
 import de.mcmdev.displayformatter.common.DisplayFormatter;
+import de.mcmdev.displayformatter.spigot.listener.ChatListener;
 import de.mcmdev.displayformatter.spigot.listener.ConnectionListener;
 import de.mcmdev.displayformatter.spigot.platform.SpigotPlatform;
 import org.bukkit.entity.Player;
@@ -20,6 +21,9 @@ public class DFSpigotPlugin extends JavaPlugin {
         getServer()
                 .getPluginManager()
                 .registerEvents(new ConnectionListener(this.displayFormatter), this);
+        getServer()
+                .getPluginManager()
+                .registerEvents(new ChatListener(this.displayFormatter), this);
     }
 
     @Override

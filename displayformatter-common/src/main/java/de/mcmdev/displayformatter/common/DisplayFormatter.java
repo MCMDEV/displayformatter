@@ -1,5 +1,6 @@
 package de.mcmdev.displayformatter.common;
 
+import de.mcmdev.displayformatter.common.display.DisplayDataProvider;
 import de.mcmdev.displayformatter.common.permissionsource.PermissionSource;
 import de.mcmdev.displayformatter.common.permissionsource.impl.LuckpermsPermissionSource;
 import de.mcmdev.displayformatter.common.platform.Configuration;
@@ -17,18 +18,21 @@ public class DisplayFormatter<P> {
     private TeamManager<P> teamManager;
     private Configuration mainConfiguration;
     private PermissionSource<P> permissionSource;
+    private DisplayDataProvider<P> displayDataProvider;
 
     public void load() {
         this.mainConfiguration = this.platform.getConfiguration("config.yml");
 
         loadPermissionSourceFromConfig();
-        this.teamManager = new TeamManager<>(this.platform, this.permissionSource);
+        this.displayDataProvider = new DisplayDataProvider<>(this);
+        this.teamManager = new TeamManager<>(this.platform, this.displayDataProvider);
     }
 
     public void unload() {
         this.teamManager = null;
         this.permissionSource = null;
         this.mainConfiguration = null;
+        this.displayDataProvider = null;
     }
 
     private void loadPermissionSourceFromConfig() {
@@ -40,5 +44,9 @@ public class DisplayFormatter<P> {
         }
 
         this.permissionSource = permissionSource;
+    }
+
+    public DisplayDataProvider<P> getDisplayDataProvider() {
+        return displayDataProvider;
     }
 }

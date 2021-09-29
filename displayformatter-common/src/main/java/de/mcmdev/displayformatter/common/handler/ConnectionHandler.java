@@ -50,5 +50,6 @@ public class ConnectionHandler<P> {
                                                         .deleteTeam(all, team.getName());
                                             });
                         });
+        this.displayFormatter.getDisplayDataProvider().invalidatePlayerCaches(player);
     }
 }

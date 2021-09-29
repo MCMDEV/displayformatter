@@ -14,18 +14,39 @@ public abstract class AbstractPermissionSource<P> implements PermissionSource<P>
     }
 
     @Override
-    public Optional<String> getPrefix(P player) {
-        return getPrefix(displayFormatter.getPlatform().getUUID(player));
+    public Optional<String> getTabPrefix(P player) {
+        return getTabPrefix(displayFormatter.getPlatform().getUUID(player));
     }
 
-    public abstract Optional<String> getPrefix(UUID uuid);
+    public abstract Optional<String> getTabPrefix(UUID uuid);
 
     @Override
-    public Optional<String> getSuffix(P player) {
-        return getSuffix(displayFormatter.getPlatform().getUUID(player));
+    public Optional<String> getTabSuffix(P player) {
+        return getTabSuffix(displayFormatter.getPlatform().getUUID(player));
     }
 
-    public abstract Optional<String> getSuffix(UUID uuid);
+    public abstract Optional<String> getTabSuffix(UUID uuid);
+
+    @Override
+    public Optional<String> getChatPrefix(P player) {
+        return getChatPrefix(displayFormatter.getPlatform().getUUID(player));
+    }
+
+    public abstract Optional<String> getChatPrefix(UUID uuid);
+
+    @Override
+    public Optional<String> getChatSuffix(P player) {
+        return getChatSuffix(displayFormatter.getPlatform().getUUID(player));
+    }
+
+    public abstract Optional<String> getChatSuffix(UUID uuid);
+
+    @Override
+    public Optional<String> getChatFormat(P player) {
+        return getChatFormat(displayFormatter.getPlatform().getUUID(player));
+    }
+
+    public abstract Optional<String> getChatFormat(UUID uuid);
 
     @Override
     public Optional<String> getColor(P player) {
@@ -33,4 +54,11 @@ public abstract class AbstractPermissionSource<P> implements PermissionSource<P>
     }
 
     public abstract Optional<String> getColor(UUID uuid);
+
+    @Override
+    public Optional<Integer> getSorting(P player) {
+        return Optional.empty();
+    }
+
+    public abstract Optional<Integer> getSorting(UUID uuid);
 }

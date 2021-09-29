@@ -4,3 +4,19 @@
 # Available sources are:
 # - luckperms
 permission-source: luckperms
+#
+# This setting defines the serializer used for converting the data from the permission source into display data.
+# Available serializers are:
+# - legacy (uses & for color coding)
+# - gson (uses JSON components)
+# - plain (plain unformatted text)
+serializer: legacy
+
+# These settings are only used when "luckperms" is used as the permission-source above.
+luckperms:
+  # If this is set to "true", the meta values "tab-prefix" and "tab-suffix" will be used
+  # for tab formatting. If this value is "false", the LuckPerms prefix and suffix is used.
+  tab-prefix-suffix-use-meta: false
+  # If this is set to "true", the meta values "chat-prefix" and "chat-suffix" will be used
+  # for display name formatting. If this value is "false", the LuckPerms prefix and suffix is used.
+  chat-prefix-suffix-use-meta: false
