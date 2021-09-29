@@ -23,7 +23,8 @@ public class SpigotPlatform implements Platform<Player> {
 
     @Override
     public Configuration getConfiguration(String path) {
-        return new SpigotConfiguration(YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), path)));
+        return new SpigotConfiguration(
+                YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), path)));
     }
 
     @Override
@@ -37,7 +38,17 @@ public class SpigotPlatform implements Platform<Player> {
     }
 
     @Override
-    public void deleteTeam(Player player, String name) {}
+    public void deleteTeam(Player player, String name) {
+        Scoreboard scoreboard = player.getScoreboard();
+        org.bukkit.scoreboard.Team bukkitTeam = scoreboard.getTeam(name);
+        if (bukkitTeam == null) return;
+        bukkitTeam.unregister();
+    }
+
+    @Override
+    public Player getPlayer(UUID uuid) {
+        return Bukkit.getPlayer(uuid);
+    }
 
     @Override
     public Iterable<Player> getAllPlayers() {

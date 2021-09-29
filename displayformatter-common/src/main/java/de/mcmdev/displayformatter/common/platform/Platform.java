@@ -12,8 +12,9 @@ public interface Platform<P> {
 
     Iterable<P> getAllPlayers();
 
+    P getPlayer(UUID uuid);
+
     String getName(P player);
 
     UUID getUUID(P player);
-
 }

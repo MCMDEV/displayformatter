@@ -1,0 +1,7 @@
+name: displayformatter-spigot
+version: 1.0
+author: MCMDEV
+main: de.mcmdev.displayformatter.spigot.DFSpigotPlugin
+description: Formats display information or something, i don't know.
+softdepend:
+  - LuckPerms

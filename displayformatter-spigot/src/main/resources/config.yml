@@ -1,0 +1,6 @@
+# General configuration
+
+# This setting defines the source of all information used by the plugin.
+# Available sources are:
+# - luckperms
+permission-source: luckperms

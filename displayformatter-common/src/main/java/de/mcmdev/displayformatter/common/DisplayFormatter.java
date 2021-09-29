@@ -36,7 +36,7 @@ public class DisplayFormatter<P> {
         PermissionSource<P> permissionSource;
         switch (permissionSourceName) {
             default:
-                permissionSource = new LuckpermsPermissionSource<>(this.platform);
+                permissionSource = new LuckpermsPermissionSource<>(this);
         }
 
         this.permissionSource = permissionSource;
