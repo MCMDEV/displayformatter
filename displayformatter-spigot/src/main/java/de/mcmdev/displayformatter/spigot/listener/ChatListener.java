@@ -11,22 +11,22 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener {
 
-    private final ChatHandler<Player> connectionHandler;
+  private final ChatHandler<Player> connectionHandler;
 
-    public ChatListener(DisplayFormatter<Player> displayFormatter) {
-        this.connectionHandler = new ChatHandler<>(displayFormatter);
-    }
+  public ChatListener(DisplayFormatter<Player> displayFormatter) {
+    this.connectionHandler = new ChatHandler<>(displayFormatter);
+  }
 
-    @EventHandler
-    public void onChat(AsyncPlayerChatEvent event) {
-        ChatData chatFormat = connectionHandler.handleChat(event.getPlayer());
+  @EventHandler
+  public void onChat(AsyncPlayerChatEvent event) {
+    ChatData chatFormat = connectionHandler.handleChat(event.getPlayer());
 
-        event.getPlayer()
-                .setDisplayName(
-                        LegacyComponentSerializer.legacySection().serialize(chatFormat.getPrefix())
-                                + event.getPlayer().getName()
-                                + LegacyComponentSerializer.legacySection()
-                                        .serialize(chatFormat.getSuffix()));
-        event.setFormat(chatFormat.getFormat());
-    }
+    event
+        .getPlayer()
+        .setDisplayName(
+            LegacyComponentSerializer.legacySection().serialize(chatFormat.getPrefix())
+                + event.getPlayer().getName()
+                + LegacyComponentSerializer.legacySection().serialize(chatFormat.getSuffix()));
+    event.setFormat(chatFormat.getFormat());
+  }
 }

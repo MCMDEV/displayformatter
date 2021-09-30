@@ -1,0 +1,7 @@
+name: displayformatter-paper
+version: 1.0
+author: MCMDEV
+main: de.mcmdev.displayformatter.paper.DFPaperPlugin
+description: Formats display information or something, i don't know.
+softdepend:
+  - LuckPerms

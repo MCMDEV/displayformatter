@@ -1,32 +1,29 @@
-package de.mcmdev.displayformatter.spigot.platform;
+package de.mcmdev.displayformatter.paper.platform;
 
 import de.mcmdev.displayformatter.common.platform.Configuration;
 import de.mcmdev.displayformatter.common.platform.Platform;
 import de.mcmdev.displayformatter.common.platform.Team;
-import de.mcmdev.displayformatter.spigot.DFSpigotPlugin;
+import de.mcmdev.displayformatter.paper.DFPaperPlugin;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.io.File;
-import java.util.Locale;
 import java.util.UUID;
 
-public class SpigotPlatform implements Platform<Player> {
+public class PaperPlatform implements Platform<Player> {
 
-  private final DFSpigotPlugin plugin;
+  private final DFPaperPlugin plugin;
 
-  public SpigotPlatform(DFSpigotPlugin plugin) {
+  public PaperPlatform(DFPaperPlugin plugin) {
     this.plugin = plugin;
   }
 
   @Override
   public Configuration getConfiguration(String path) {
-    return new SpigotConfiguration(
+    return new PaperConfiguration(
         YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), path)));
   }
 
@@ -37,11 +34,9 @@ public class SpigotPlatform implements Platform<Player> {
     if (bukkitTeam == null) {
       bukkitTeam = scoreboard.registerNewTeam(team.getName());
     }
-    bukkitTeam.setPrefix(LegacyComponentSerializer.legacySection().serialize(team.getPrefix()));
-    bukkitTeam.setSuffix(LegacyComponentSerializer.legacySection().serialize(team.getSuffix()));
-    bukkitTeam.setColor(
-        ChatColor.valueOf(
-            NamedTextColor.nearestTo(team.getColor()).toString().toUpperCase(Locale.ROOT)));
+    bukkitTeam.prefix(team.getPrefix());
+    bukkitTeam.suffix(team.getSuffix());
+    bukkitTeam.color(NamedTextColor.nearestTo(team.getColor()));
     bukkitTeam.addEntry(team.getOwner());
   }
 

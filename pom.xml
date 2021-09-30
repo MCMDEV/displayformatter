@@ -11,6 +11,7 @@
     <modules>
         <module>displayformatter-common</module>
         <module>displayformatter-spigot</module>
+        <module>displayformatter-paper</module>
     </modules>
 
     <properties>
